@@ -1,0 +1,7 @@
+{
+  "name": "Hosny Fadda - Space Navigation Engineer Portfolio",
+  "description": "A high-end, interactive professional portfolio for Hosny Fadda, featuring an AI-powered resume assistant, data-driven project displays, and a sleek space-navigation themed interface.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
