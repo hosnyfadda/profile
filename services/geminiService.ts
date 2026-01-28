@@ -2,9 +2,16 @@
 import { GoogleGenAI } from "@google/genai";
 import { RESUME_DATA, PROJECTS, SKILLS, CERTIFICATIONS } from "../constants";
 
-// استخدام فحص أمان للتأكد من وجود المفتاح قبل التهيئة
-const apiKey = (typeof process !== 'undefined' && process.env?.API_KEY) || "";
+// وظيفة آمنة لجلب مفتاح API من البيئات المختلفة
+const getApiKey = () => {
+  try {
+    return process.env.API_KEY || (window as any).process?.env?.API_KEY || "";
+  } catch (e) {
+    return "";
+  }
+};
 
+const apiKey = getApiKey();
 const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 const SYSTEM_INSTRUCTION = `
@@ -28,12 +35,21 @@ If asked about specific scores, mention 92% in Huawei AI Track, 88% in Deep Lear
 `;
 
 export const chatWithGemini = async (message: string) => {
-  if (!ai) {
-    return "Communication link is currently offline. Please ensure a secure uplink (API Key) is established.";
+  // محاولة إعادة التهيئة إذا كان المفتاح قد تم تعيينه لاحقاً
+  let currentAi = ai;
+  if (!currentAi) {
+    const key = getApiKey();
+    if (key) {
+      currentAi = new GoogleGenAI({ apiKey: key });
+    }
+  }
+
+  if (!currentAi) {
+    return "Communication link is offline. Please establish a secure uplink (API Key) to enable AI assistance.";
   }
 
   try {
-    const response = await ai.models.generateContent({
+    const response = await currentAi.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: message,
       config: {
@@ -42,8 +58,11 @@ export const chatWithGemini = async (message: string) => {
     });
 
     return response.text || "I'm sorry, I couldn't process that request.";
-  } catch (error) {
+  } catch (error: any) {
     console.error("Gemini API Error:", error);
-    return "I am currently orbiting outside communication range. Please check the mission log (console) for details.";
+    if (error?.message?.includes("API_KEY_INVALID")) {
+      return "Mission Error: Invalid Uplink Credentials. Please verify the API key.";
+    }
+    return "I am currently orbiting outside communication range. Please check the logs.";
   }
 };
