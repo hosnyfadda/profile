@@ -63,7 +63,12 @@ const GeminiAssistant: React.FC = () => {
 
   const startLiveSession = async () => {
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const apiKey = import.meta.env.VITE_API_KEY || "";
+      if (!apiKey) {
+        setMessages(prev => [...prev, { role: 'model', text: 'Live mode requires API key configuration. Please set VITE_API_KEY environment variable.' }]);
+        return;
+      }
+      const ai = new GoogleGenAI({ apiKey });
       const inputCtx = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 16000 });
       const outputCtx = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
       audioContextsRef.current = { input: inputCtx, output: outputCtx };

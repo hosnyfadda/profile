@@ -5,14 +5,11 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  // المسار الأساسي يجب أن يطابق اسم المستودع الخاص بك
+  // Base path must match your repository name
   base: '/profile/',
   define: {
-    // تعريف آمن لمتغيرات البيئة
-    'process.env.API_KEY': JSON.stringify(process.env.API_KEY || ''),
-    'process.env': {
-      NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'production')
-    }
+    // Define environment variables for Vite
+    'import.meta.env.VITE_API_KEY': JSON.stringify(process.env.API_KEY || ''),
   },
   build: {
     outDir: 'dist',

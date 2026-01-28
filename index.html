@@ -7,13 +7,6 @@
     <title>Hosny Fadda | Space Navigation Engineer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <script>
-        // تعريف كائن process لمنع أخطاء المكتبات التي تعتمد على Node.js
-        window.process = { 
-            env: { API_KEY: "" },
-            nextTick: function(cb) { setTimeout(cb, 0); }
-        };
-    </script>
     <style>
         :root {
             --space-blue: #3b82f6;
@@ -88,26 +81,20 @@
         ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
     </style>
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.4",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
-    "vite": "https://esm.sh/vite@^7.3.1",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
-  }
-}
-</script>
 </head>
 <body>
     <div class="space-bg"></div>
     <div class="stars"></div>
     <div class="grid-overlay"></div>
     <div class="scanline"></div>
-    <div id="root"></div>
-    <!-- استخدام المسار المطلق من الجذر ليتمكن Vite من معالجته -->
-    <script type="module" src="/index.tsx"></script>
+    <div id="root">
+        <div style="display: flex; align-items: center; justify-content: center; height: 100vh; color: #e2e8f0; font-family: Inter, sans-serif;">
+            <div style="text-align: center;">
+                <p style="font-size: 18px; margin: 0; color: #3b82f6;">Loading...</p>
+                <p style="font-size: 14px; margin: 8px 0 0 0; color: #94a3b8;">If this persists, check browser console for errors.</p>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="./index.tsx"></script>
 </body>
 </html>

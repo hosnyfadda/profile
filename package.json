@@ -10,7 +10,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist -m 'Deploy to GitHub Pages'",
+    "deploy:clean": "gh-pages -d dist -m 'Deploy to GitHub Pages' --remove '.git'"
   },
   "dependencies": {
     "@google/genai": "^1.38.0",

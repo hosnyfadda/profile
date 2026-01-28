@@ -2,17 +2,24 @@
 import { GoogleGenAI } from "@google/genai";
 import { RESUME_DATA, PROJECTS, SKILLS, CERTIFICATIONS } from "../constants";
 
-// وظيفة آمنة لجلب مفتاح API من البيئات المختلفة
-const getApiKey = () => {
+// Safely retrieve API key from Vite environment variables
+const getApiKey = (): string => {
   try {
-    return process.env.API_KEY || (window as any).process?.env?.API_KEY || "";
+    // Access the API key defined by Vite during build
+    const key = import.meta.env.VITE_API_KEY || "";
+    return key;
   } catch (e) {
+    console.warn("Could not retrieve API key");
     return "";
   }
 };
 
 const apiKey = getApiKey();
-const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
+let ai: GoogleGenAI | null = null;
+
+if (apiKey) {
+  ai = new GoogleGenAI({ apiKey });
+}
 
 const SYSTEM_INSTRUCTION = `
 You are the personal AI Assistant for Hosny Fadda. Your goal is to help visitors understand Hosny's unique background as a Space Navigation Engineer who is also an AI/ML specialist.
