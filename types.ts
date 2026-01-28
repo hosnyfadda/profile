@@ -7,6 +7,8 @@ export interface Project {
   description: string;
   techStack: string[];
   image: string;
+  detailedSpecs?: string[];
+  metrics?: { label: string; value: string }[];
 }
 
 export interface Skill {
