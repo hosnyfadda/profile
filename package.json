@@ -4,7 +4,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://USERNAME.github.io/REPO-NAME",
+  "homepage": "https://hosnyfadda.github.io/profile/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
