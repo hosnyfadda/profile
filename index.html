@@ -8,11 +8,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script>
-        // تعريف كائن process يدوياً لضمان توافق المكتبات في بيئة المتصفح
+        // تعريف كائن process لمنع أخطاء المكتبات التي تعتمد على Node.js
         window.process = { 
-            env: { 
-                API_KEY: "" 
-            },
+            env: { API_KEY: "" },
             nextTick: function(cb) { setTimeout(cb, 0); }
         };
     </script>
@@ -109,6 +107,7 @@
     <div class="grid-overlay"></div>
     <div class="scanline"></div>
     <div id="root"></div>
-    <script type="module" src="./index.tsx"></script>
+    <!-- استخدام المسار المطلق من الجذر ليتمكن Vite من معالجته -->
+    <script type="module" src="/index.tsx"></script>
 </body>
 </html>
